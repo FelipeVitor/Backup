@@ -1,0 +1,59 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1209
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1209.
+
+data: begin of it occurs 12,
+          f1,
+          end of it,
+          alpha(12) value 'ABCDEFGHIJKL'.
+
+do 12 times varying it-f1 from alpha+0(1) next alpha+1(1) range alpha.
+    append it.
+    enddo.
+
+loop at it.
+    write: / sy-tabix, it-f1.
+    endloop.
+
+delete it index 5.
+skip.
+loop at it.
+    write: / sy-tabix, it-f1.
+    endloop.
+
+delete it from 6 to 8.
+skip.
+loop at it.
+   write: / sy-tabix, it-f1.
+   endloop.
+
+delete it where f1 between 'B' and 'D'.
+skip.
+loop at it.
+   write: / sy-tabix, it-f1.
+   endloop.
+
+loop at it where f1 between 'E' and 'J'.
+    delete it.
+    endloop.
+
+skip.
+loop at it.
+    write: / sy-tabix, it-f1.
+    endloop.
+
+read table it with key f1 = 'K' binary search.
+write: /, / 'sy-subrc=', sy-subrc, 'sy-tabix=', sy-tabix, / ''.
+if sy-subrc = 0.
+    delete it index sy-tabix.
+    endif.
+
+skip.
+loop at it.
+    write: / sy-tabix, it-f1.
+    endloop.
+
+free it.

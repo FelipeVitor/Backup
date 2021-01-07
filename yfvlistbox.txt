@@ -1,0 +1,45 @@
+*&---------------------------------------------------------------------*
+*& Report YFVLISTBOX
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT yfvlistbox.
+
+TYPE-POOLS: vrm.
+
+PARAMETERS: pedido like yfvrefei-refeicao AS LISTBOX VISIBLE LENGTH 20.
+
+TYPES: BEGIN OF yfvrefei,
+         refeicao TYPE yfvrefei-refeicao,
+       END OF yfvrefei.
+
+DATA: it_refei TYPE STANDARD TABLE OF yfvrefei,
+      wa_refei TYPE yfvrefei.
+
+DATA: g_id       TYPE vrm_id,
+      it_values  TYPE vrm_values,
+      wa_values  LIKE LINE OF it_values.
+
+
+INITIALIZATION.
+
+  SELECT refeicao FROM yfvrefei INTO TABLE it_refei.
+
+  LOOP AT it_refei INTO wa_refei.
+    wa_values-key = wa_refei-refeicao.
+    wa_values-text = wa_refei-refeicao.
+    APPEND wa_values TO it_values.
+   clear wa_values.
+  ENDLOOP.
+
+AT SELECTION-SCREEN OUTPUT.
+
+  CALL FUNCTION 'VRM_SET_VALUES'
+    EXPORTING
+      id     = 'pedido'
+      values = it_values
+    .
+
+end-of-selection.
+
+  WRITE: / 'Você selecionou', pedido.

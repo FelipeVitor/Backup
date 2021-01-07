@@ -1,0 +1,73 @@
+*&---------------------------------------------------------------------*
+*& Report YFVJG
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT yfvjg.
+
+TABLES: yfvjg1,
+        yfvjg2.
+
+DATA: s1      TYPE string,
+      s2      TYPE string,
+      saida   TYPE string,
+      i type int8 value 0,
+      j type int8 value 0
+*      testIt1 TYPE yfvjg1,
+*      testIt2 TYPE yfvjg2
+      .
+
+PARAMETERS: dia LIKE yfvjg1-dia OBLIGATORY LENGTH 2,
+            mes LIKE yfvjg2-mes OBLIGATORY LENGTH 2.
+
+
+
+PERFORM: p_seleciona, p_imprime.
+*&---------------------------------------------------------------------*
+*& Form p_seleciona
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM p_seleciona .
+
+  SELECT * FROM yfvjg1.
+    IF dia = yfvjg1-dia.
+      s1  = yfvjg1-adjetivo.
+      i = 1.
+    ENDIF.
+  ENDSELECT.
+
+  if i = 0.
+    write: / 'Dia invalido ou não encontrado'.
+  endif.
+
+  SELECT * FROM yfvjg2.
+    IF mes = yfvjg2-mes.
+      s2  = yfvjg2-profissao.
+      j = 1.
+    ENDIF.
+   ENDSELECT.
+
+  if j = 0.
+    write: / 'Mês invalido ou não encontrado'.
+  endif.
+
+ENDFORM.
+
+*&---------------------------------------------------------------------*
+*& Form p_imprime
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM p_imprime .
+  if i <> 0 and j <> 0.
+    CONCATENATE s2 s1 INTO saida SEPARATED BY space.
+    WRITE saida.
+  endif.
+ENDFORM.
