@@ -1,0 +1,22 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1807
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1807.
+data: f1 value 'A'.
+
+perform: s1 changing f1,
+         s2 changing f1.
+
+end-of-selection.
+  write: / 'Stopped. f1 =', f1.
+
+form s1 changing value(p1).
+  p1 = 'B'.
+  endform.
+
+form s2 changing value(p1).
+  p1 = 'X'.
+  stop.
+  endform.

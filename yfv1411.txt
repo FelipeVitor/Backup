@@ -1,0 +1,23 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1411
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1411.
+data f1 type p decimals 3 value '1575.456'.
+write: / f1,                    20 'as-is',
+       / f1 decimals 4,           20 'decimals 4',
+       / f1 decimals 3,           20 'decimals 3',
+       / f1 decimals 2,           20 'decimals 2',
+       / f1 decimals 1,           20 'decimals 1',
+       / f1 decimals 0,           20 'decimals 0',
+       / f1 decimals -1,           20 'decimals -1',
+       / f1 round 4,               20 'round 4',
+       / f1 round 3,               20 'round 3',
+       / f1 round 2,               20 'round 2',
+       / f1 round 1,               20 'round 1',
+       / f1 round 0,               20 'round 0',
+       / f1 round -1,              20 'round -1',
+       / f1 round -2,               20 'round -2',
+       / f1 round 3 decimals 1,     20 'round 3 decimals 1',
+       / f1 round 3 decimals 3,     20 'round 3 decimals 3'.

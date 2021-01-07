@@ -1,0 +1,20 @@
+**&---------------------------------------------------------------------*
+*& Report YFVP002
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFVP002 LINE-SIZE 130 LINE-COUNT 65.
+
+TABLES: T001W.
+
+DATA: BEGIN OF T_001 OCCURS 30,
+        NAME LIKE T001W-NAME1,
+        ORT LIKE T001W-ORT01,
+      END OF T_001.
+
+SELECT NAME1 ORT01 FROM T001W INTO TABLE T_001.
+
+ LOOP AT T001W.
+   WRITE: / '|', T001W-NAME1, '|', T001W-ORT01.            
+             ULINE.
+ ENDLOOP.

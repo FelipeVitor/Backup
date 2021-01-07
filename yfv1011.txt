@@ -1,0 +1,32 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1011
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1011.
+data: f1 type i,
+      begin of s,
+        c1 type i value 1,
+        c2 type i value 2,
+        c3 type i value 3,
+        c4 type i value 4,
+        c5 type i value 5,
+        c6 type i value 6,
+      end of s.
+field-symbols <f>.
+
+write / ''.
+do 6 times varying f1 from s-c1 next s-c2.
+  if sy-index = 6.
+    s-c6 = 99.
+  else.
+    f1 = f1 * 2.
+    endif.
+  assign component sy-index of structure s to <f>. "<f> indica comportamento de S
+  write <f>.
+enddo.
+
+write / ''.
+do 6 times varying f1 from s-c1 next s-c2.
+  write f1.
+  enddo.

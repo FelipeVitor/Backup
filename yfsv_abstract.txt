@@ -1,0 +1,42 @@
+*&---------------------------------------------------------------------*
+*& Report yfsv_abstract
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT yfsv_abstract.
+
+class animal definition abstract.
+    public section.
+    methods: sleep.
+    methods: make_sound ABSTRACT.
+
+
+endclass.
+
+class animal implementation.
+    method sleep.
+      write:/ 'ZZZZ'.
+
+
+    endmethod.
+endclass.
+
+class cat definition inheriting from animal.
+    public section.
+    methods: make_sound REDEFINITION.
+endclass.
+
+class cat implementation.
+    method make_sound.
+      write:/ 'meow'.
+    endmethod.
+endclass.
+
+start-of-selection.
+
+*data(a1) = new animal( ).
+*a1->sleep(  ).
+
+data(c1) = new cat( ).
+c1->sleep(  ).
+c1->make_sound( ).

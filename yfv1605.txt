@@ -1,0 +1,23 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1605
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1605.
+DATA n TYPE I.
+DO 4 TIMES.
+  DO 4 TIMES.
+    POSITION sy-INDEX.
+    WRITE 'A'.
+  ENDDO.
+  NEW-LINE.
+ENDDO.
+
+SKIP.
+DO 4 TIMES.
+  DO 4 TIMES.
+  POSITION sy-INDEX.
+  WRITE 'A'.
+  ENDDO.
+SKIP.
+ENDDO.

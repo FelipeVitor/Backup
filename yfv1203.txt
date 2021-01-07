@@ -1,0 +1,32 @@
+*&---------------------------------------------------------------------*
+*& Report YFV1203
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT YFV1203.
+
+data: begin of it occurs 10,
+            t(72),
+            end of it,
+      save_it like it occurs 10.
+
+it-t = 'Name          :'. append it.
+it-t = 'Address       :'. append it.
+it-t = 'Phone         :'. append it.
+it-t = 'Freeform text'  . append it.
+
+clear it-t with '-'.      append it.
+
+save_it = it[].
+editor-call for it title 'Freeform Entry'.
+if sy-subrc = 4.
+    write: / 'Data was not changed'.
+elseif save_it[] <> it[].
+    write: / 'Data was changed'.
+else.
+    write: / 'Data was not changed'.
+    endif.
+write: / sy-uline(72).
+loop at it.
+    write: / it-t.
+    endloop.
