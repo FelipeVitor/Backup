@@ -1,0 +1,134 @@
+*&---------------------------------------------------------------------*
+*& Report yfv_buscaaniv
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT yfv_buscaaniv.
+
+tables: yfv_aniver.
+data: it_anniv type standard table of yfv_aniver,
+      wa_anniv like line of it_anniv,
+      it_fcat type slis_t_fieldcat_alv,
+      wa_fcat like line of it_fcat.
+
+
+      SELECTION-SCREEN COMMENT /30(50) comm1.
+      SELECTION-SCREEN COMMENT /30(30) comm2.
+        parameters: p_mesAni type int8.
+
+      AT SELECTION-SCREEN.
+      AT SELECTION-SCREEN OUTPUT.
+
+      comm1 = 'Escreva o mês pelo número correspondente'.
+      comm2 = '(Exemplo: Março = 3)'.
+      start-of-selection.
+
+      case p_mesAni.
+        when 1.
+            select * from yfv_aniver where ydata like '%____01__%'
+            into table @it_anniv.
+        when 2.
+            select * from yfv_aniver where ydata like '%____02__%'
+            into table @it_anniv.
+        when 3.
+            select * from yfv_aniver where ydata like '%____03__%'
+            into table @it_anniv.
+        when 4.
+            select * from yfv_aniver where ydata like '%____04__%'
+            into table @it_anniv.
+        when 5.
+            select * from yfv_aniver where ydata like '%____05__%'
+            into table @it_anniv.
+        when 6.
+            select * from yfv_aniver where ydata like '%____06__%'
+            into table @it_anniv.
+        when 7.
+            select * from yfv_aniver where ydata like '%____07__%'
+            into table @it_anniv.
+        when 8.
+            select * from yfv_aniver where ydata like '%____08__%'
+            into table @it_anniv.
+        when 9.
+            select * from yfv_aniver where ydata like '%____09__%'
+            into table @it_anniv.
+        when 10.
+            select * from yfv_aniver where ydata like '%____10__%'
+            into table @it_anniv.
+        when 11.
+            select * from yfv_aniver where ydata like '%____11__%'
+            into table @it_anniv.
+        when 12.
+            select * from yfv_aniver where ydata like '%____12__%'
+            into table @it_anniv.
+      endcase.
+
+      if p_mesAni <= 0 or p_mesAni >= 13.
+        MESSAGE 'Mês inválido' TYPE 'E'.
+      endif.
+
+      wa_fcat-fieldname = 'ynome'.
+      wa_fcat-seltext_m = 'Nome Funcionario'.
+      append wa_fcat to it_fcat.
+      clear wa_fcat.
+
+      wa_fcat-fieldname = 'ydata'.
+      wa_fcat-seltext_m = 'Data Aniversário'.
+      append wa_fcat to it_fcat.
+      clear wa_fcat.
+
+
+
+
+      CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+         EXPORTING
+*          i_interface_check           = space
+*          i_bypassing_buffer          = space
+*          i_buffer_active             = space
+           i_callback_program          = sy-repid
+*          i_callback_pf_status_set    = space
+*          i_callback_user_command     = 'UCOMMAND'
+*          i_callback_top_of_page      = space
+*          i_callback_html_top_of_page = space
+*          i_callback_html_end_of_list = space
+*          i_structure_name            =
+*          i_background_id             =
+*          i_grid_title                =
+*          i_grid_settings             =
+*          is_layout                   =
+           it_fieldcat                 = it_fcat
+*          it_excluding                =
+*          it_special_groups           =
+*          it_sort                     =
+*          it_filter                   =
+*          is_sel_hide                 =
+*          i_default                   = 'X'
+*          i_save                      = space
+*          is_variant                  =
+*          it_events                   =
+*          it_event_exit               =
+*          is_print                    =
+*          is_reprep_id                =
+*          i_screen_start_column       = 0
+*          i_screen_start_line         = 0
+*          i_screen_end_column         = 0
+*          i_screen_end_line           = 0
+*          i_html_height_top           = 0
+*          i_html_height_end           = 0
+*          it_alv_graphics             =
+*          it_hyperlink                =
+*          it_add_fieldcat             =
+*          it_except_qinfo             =
+*          ir_salv_fullscreen_adapter  =
+*          o_previous_sral_handler     =
+*        IMPORTING
+*          e_exit_caused_by_caller     =
+*          es_exit_caused_by_user      =
+        TABLES
+          t_outtab                    = it_anniv
+*        EXCEPTIONS
+*          program_error               = 1
+*          others                      = 2
+        .
+
+        if sy-subrc <> 0.
+        endif.
