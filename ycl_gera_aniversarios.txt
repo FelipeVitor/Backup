@@ -1,0 +1,38 @@
+CLASS ycl_gera_aniversarios DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS ycl_gera_aniversarios IMPLEMENTATION.
+
+  METHOD if_oo_adt_classrun~main.
+    DATA:it_aniv TYPE TABLE OF yaniversarios.
+
+*    read current timestamp
+    GET TIME STAMP FIELD DATA(zv_tsl).
+*   fill internal table (itab)
+    it_aniv = VALUE #(
+       ( nomecolab = 'Felipe Vitor' datanasc = '19970711' )
+       ( nomecolab = 'Rafael Silva' datanasc = '19910504' )
+     ).
+
+*   Delete the possible entries in the database table - in case it was already filled
+    DELETE FROM yaniversarios.
+*   insert the new table entries
+    INSERT yaniversarios FROM TABLE @it_aniv.
+
+*   check the result
+    SELECT * FROM yaniversarios INTO TABLE @it_aniv.
+    out->write( sy-dbcnt ).
+    out->write( 'data inserted successfully!').
+
+  ENDMETHOD.
+
+ENDCLASS.
